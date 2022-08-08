@@ -12,7 +12,7 @@ import org.springframework.context.annotation.Profile;
 @Profile("prod")
 public class DataConfiguration {
 	
-	private String db_url = "postgresql://ec2-107-22-122-106.compute-1.amazonaws.com:5432/d3p2rq816gkogcv";
+	private String db_url = "postgresql://ec2-107-22-122-106.compute-1.amazonaws.com:5432/d3p2rq816gkogc";
 	
 	@Bean
     public BasicDataSource dataSource() throws URISyntaxException {

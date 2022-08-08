@@ -1,27 +1,24 @@
-package com.kca.order.entities.dtos.users;
+package com.kca.order.entities.dtos.itens;
 
 import java.io.Serializable;
-import java.time.OffsetDateTime;
 import java.util.Objects;
 import java.util.UUID;
 
-import com.kca.order.entities.User;
+import com.kca.order.entities.Item;
+import com.kca.order.entities.dtos.users.UserShowDTO;
 
-public class UserShowDTO implements Serializable {
-	
+public class ItemShowDTO implements Serializable {
 
 	private static final long serialVersionUID = 1L;
+	
 	private UUID id;
-    private String name;
-    private String email;
-
-    public UserShowDTO() {}
-    
-    public UserShowDTO(User user) {
-        this.id = user.getId();
-        this.name = user.getName();
-        this.email = user.getEmail();
-    }
+	private String name;
+	
+	public ItemShowDTO(Item item) {
+		this.id = item.getId();
+		this.name = item.getName();
+		
+	}
 
 	public UUID getId() {
 		return id;
@@ -38,21 +35,12 @@ public class UserShowDTO implements Serializable {
 	public void setName(String name) {
 		this.name = name;
 	}
-
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
-	}
-
-    
+	
 	@Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        UserShowDTO entity = (UserShowDTO) o;
+        ItemShowDTO entity = (ItemShowDTO) o;
         return Objects.equals(this.id, entity.id) &&
                 Objects.equals(this.name, entity.name);
     }
@@ -61,5 +49,9 @@ public class UserShowDTO implements Serializable {
     public int hashCode() {
         return Objects.hash(id, name);
     }
+	
+	
+	
+	
 
 }

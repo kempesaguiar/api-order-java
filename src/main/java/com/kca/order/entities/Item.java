@@ -14,11 +14,12 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.UpdateTimestamp;
 
+import com.kca.order.entities.dtos.itens.ItemCreateDTO;
 import com.kca.order.entities.dtos.users.UserCreateDTO;
 
 @Entity
-@Table(name = "tb_user")
-public class User implements Serializable {
+@Table(name = "tb_item")
+public class Item implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 	
@@ -31,17 +32,12 @@ public class User implements Serializable {
 	@Column(name = "name", length = 300, nullable = false)
 	private String name;
 	
-	@Column(name = "email", length = 50, nullable = false)
-	private String email;
-	
-	
-	public User() {
+	public Item() {
 		
 	}
 	
-	public User(UserCreateDTO dto) {
+	public Item(ItemCreateDTO dto) {
 		this.setName(dto.getName());
-		this.setEmail(dto.getEmail());
 	}
 
 	public UUID getId() {
@@ -60,13 +56,7 @@ public class User implements Serializable {
 		this.name = name;
 	}
 
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
-	}
+	
 	
 
 }
