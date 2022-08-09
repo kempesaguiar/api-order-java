@@ -1,6 +1,7 @@
 package com.kca.order.services.impl;
 
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,6 +41,20 @@ public class StockMovementServiceImpl implements StockMovementService {
 		return this.repository.findAll()
 				.stream().map(stockMovement -> this.userMapper.stockMovementToStockMovementShowDTO(stockMovement))
 				.collect(Collectors.toList());
+	}
+	
+	@Transactional
+	@Override
+	public StockMovementShowDTO updateStockMovement(UUID id, StockMovementCreateDTO stockMovementRequestDTO) {
+		StockMovement stockMovementToBeSaved = this.userMapper.stockMovementCreateDTOToStockMovement(stockMovementRequestDTO);
+		stockMovementToBeSaved = this.repository.saveAndFlush(stockMovementToBeSaved);
+		return this.userMapper.stockMovementToStockMovementShowDTO(stockMovementToBeSaved);
+	}
+	
+	@Transactional
+	@Override
+	public void deleteStockMovement(UUID id) {
+		repository.deleteById(id);
 	}
 
 }

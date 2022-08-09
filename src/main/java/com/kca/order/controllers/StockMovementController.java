@@ -2,12 +2,16 @@ package com.kca.order.controllers;
 
 import java.net.URI;
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -38,13 +42,32 @@ public class StockMovementController {
 	}
 
 	@PostMapping
-	public ResponseEntity<BaseResponse<StockMovementShowDTO>> createUser(@RequestBody StockMovementCreateDTO dto) {
+	public ResponseEntity<BaseResponse<StockMovementShowDTO>> createStockMovement(@RequestBody StockMovementCreateDTO dto) {
 		BaseResponse<StockMovementShowDTO> response = new BaseResponse<>();
 		StockMovementShowDTO savedStockMovement = this.service.createStockMovement(dto);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
 				.buildAndExpand(savedStockMovement.getId()).toUri();
 		response.setResponse(savedStockMovement, HttpStatus.CREATED);
 		return ResponseEntity.created(uri).body(response);
+	}
+	
+	@PutMapping("/{id}")
+	public ResponseEntity<BaseResponse<StockMovementShowDTO>> updateStockMovement(@PathVariable UUID id, @RequestBody StockMovementCreateDTO dto) {
+		BaseResponse<StockMovementShowDTO> response = new BaseResponse<>();
+		StockMovementShowDTO savedStockMovement = this.service.createStockMovement(dto);
+		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
+				.buildAndExpand(savedStockMovement.getId()).toUri();
+		response.setResponse(savedStockMovement, HttpStatus.OK);
+		return ResponseEntity.created(uri).body(response);
+	}
+	
+	@DeleteMapping("/{id}")
+	public void deleteStockMovement(UUID id) {
+		try {
+			this.service.deleteStockMovement(id);
+		} catch(Exception e) {
+			System.out.println("Error delete by User " + id);
+		}
 	}
 
 

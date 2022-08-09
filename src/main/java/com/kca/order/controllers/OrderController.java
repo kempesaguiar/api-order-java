@@ -2,12 +2,15 @@ package com.kca.order.controllers;
 
 import java.net.URI;
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -45,6 +48,25 @@ public class OrderController {
 				.buildAndExpand(savedOrder.getId()).toUri();
 		response.setResponse(savedOrder, HttpStatus.CREATED);
 		return ResponseEntity.created(uri).body(response);
+	}
+	
+	@PutMapping("/{id}")
+	public ResponseEntity<BaseResponse<OrderShowDTO>> updateUser(UUID id, @RequestBody OrderCreateDTO dto) {
+		BaseResponse<OrderShowDTO> response = new BaseResponse<>();
+		OrderShowDTO savedOrder = this.service.updateOrder(id, dto);
+		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
+				.buildAndExpand(savedOrder.getId()).toUri();
+		response.setResponse(savedOrder, HttpStatus.CREATED);
+		return ResponseEntity.created(uri).body(response);
+	}
+	
+	@DeleteMapping
+	public void deleteOrder(UUID id) {
+		try {
+			this.service.deleteOrder(id);
+		} catch(Exception e) {
+			System.out.println("Error delete by User " + id);
+		}
 	}
 
 

@@ -2,6 +2,7 @@ package com.kca.order.services.impl;
 
 
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,5 +44,18 @@ public class UserServiceImpl implements UserService {
 				.collect(Collectors.toList());
 	}
 	
+	@Transactional
+	@Override
+	public UserShowDTO updateUser(UUID id, UserCreateDTO userRequestDTO) {
+		User userToBeSaved = this.userMapper.userCreateDTOToUser(userRequestDTO);
+		userToBeSaved = this.repository.saveAndFlush(userToBeSaved);
+		return this.userMapper.userToUserShowDTO(userToBeSaved);
+	}
+	
+	@Transactional
+	@Override
+	public void deleteUser(UUID id) {
+		repository.deleteById(id);
+	}
 
 }

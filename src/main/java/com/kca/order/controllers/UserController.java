@@ -2,12 +2,16 @@ package com.kca.order.controllers;
 
 import java.net.URI;
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -46,6 +50,25 @@ public class UserController {
 				.buildAndExpand(savedUser.getId()).toUri();
 		response.setResponse(savedUser, HttpStatus.CREATED);
 		return ResponseEntity.created(uri).body(response);
+	}
+	
+	@PutMapping("/{id}")
+	public ResponseEntity<BaseResponse<UserShowDTO>> updateUser(@PathVariable UUID id, @RequestBody UserCreateDTO dto) {
+		BaseResponse<UserShowDTO> response = new BaseResponse<>();
+		UserShowDTO savedUser = this.service.updateUser(id, dto);
+		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
+				.buildAndExpand(savedUser.getId()).toUri();
+		response.setResponse(savedUser, HttpStatus.CREATED);
+		return ResponseEntity.created(uri).body(response);
+	}
+	
+	@DeleteMapping("/{id}")
+	public void deleteUser(UUID id) {
+		try {
+			this.service.deleteUser(id);
+		} catch (Exception e) {
+			System.out.println("Error delete by User " + id);
+		}
 	}
 
 }
