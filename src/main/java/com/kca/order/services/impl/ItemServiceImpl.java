@@ -47,9 +47,17 @@ public class ItemServiceImpl implements ItemService {
 				.collect(Collectors.toList());
 	}
 	
+	@Override
+	public Item listItem(UUID id) throws Exception {
+		return itemrepository.findById(id)
+				.orElseThrow(() -> new Exception("ID not found"));
+	}
+	
 	@Transactional
 	@Override
-	public ItemShowDTO updateItem(UUID id, ItemCreateDTO itemRequestDTO) {
+	public ItemShowDTO updateItem(UUID id, ItemCreateDTO itemRequestDTO) throws Exception {
+		
+		Item searchItem = listItem(id);
 		Item itemToBeSaved = this.userMapper.itemCreateDTOToItem(itemRequestDTO);
 		itemToBeSaved = this.itemrepository.saveAndFlush(itemToBeSaved);
 		return this.userMapper.itemToItemShowDTO(itemToBeSaved);
