@@ -25,7 +25,6 @@ import com.kca.order.services.ItemService;
 import com.kca.order.utils.BaseResponse;
 
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.responses.ApiResponses;
 
 @RestController
 @RequestMapping("/itens")

@@ -17,7 +17,6 @@ import org.hibernate.annotations.GenericGenerator;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import com.kca.order.entities.dtos.stockmovements.StockMovementCreateDTO;
-import com.kca.order.entities.dtos.users.UserCreateDTO;
 
 @Entity
 @Table(name = "tb_stock_movement")

@@ -5,7 +5,6 @@ import java.util.Objects;
 import java.util.UUID;
 
 import com.kca.order.entities.Item;
-import com.kca.order.entities.dtos.users.UserShowDTO;
 
 public class ItemShowDTO implements Serializable {
 

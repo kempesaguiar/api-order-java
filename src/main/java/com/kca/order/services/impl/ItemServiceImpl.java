@@ -9,14 +9,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.kca.order.entities.Item;
-import com.kca.order.entities.User;
 import com.kca.order.entities.dtos.itens.ItemCreateDTO;
 import com.kca.order.entities.dtos.itens.ItemShowDTO;
-import com.kca.order.entities.dtos.users.UserCreateDTO;
-import com.kca.order.entities.dtos.users.UserShowDTO;
 import com.kca.order.mappers.MapStructUserMapper;
 import com.kca.order.repositories.ItemRepository;
-import com.kca.order.repositories.UserRepository;
 import com.kca.order.services.ItemService;
 
 @Service

@@ -1,7 +1,6 @@
 package com.kca.order.entities;
 
 import java.io.Serializable;
-import java.time.OffsetDateTime;
 import java.util.UUID;
 
 import javax.persistence.Column;
@@ -10,12 +9,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.GenericGenerator;
-import org.hibernate.annotations.UpdateTimestamp;
 
 import com.kca.order.entities.dtos.itens.ItemCreateDTO;
-import com.kca.order.entities.dtos.users.UserCreateDTO;
 
 @Entity
 @Table(name = "tb_item")

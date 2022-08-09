@@ -1,7 +1,6 @@
 package com.kca.order.entities.dtos.users;
 
 import java.io.Serializable;
-import java.time.OffsetDateTime;
 import java.util.Objects;
 import java.util.UUID;
 

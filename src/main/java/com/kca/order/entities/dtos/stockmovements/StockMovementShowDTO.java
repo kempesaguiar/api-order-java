@@ -7,8 +7,6 @@ import java.util.UUID;
 
 import com.kca.order.entities.Item;
 import com.kca.order.entities.StockMovement;
-import com.kca.order.entities.User;
-import com.kca.order.entities.dtos.users.UserShowDTO;
 
 public class StockMovementShowDTO implements Serializable {
 
