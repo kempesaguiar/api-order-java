@@ -3,8 +3,6 @@ package com.kca.order.controllers;
 import java.net.URI;
 import java.util.List;
 
-import javax.sql.DataSource;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,12 +24,6 @@ import com.kca.order.utils.BaseResponse;
 public class UserController {
 	
 	private final UserService service;
-	
-	//@Autowired
-	//private DataSource data;
-	
-	@Autowired
-	private DataConfiguration dataConfiguration;
 
 	@Autowired
 	public UserController(UserService service) {

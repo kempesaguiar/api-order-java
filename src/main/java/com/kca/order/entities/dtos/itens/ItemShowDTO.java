@@ -14,6 +14,10 @@ public class ItemShowDTO implements Serializable {
 	private UUID id;
 	private String name;
 	
+	public ItemShowDTO() {
+		
+	}
+	
 	public ItemShowDTO(Item item) {
 		this.id = item.getId();
 		this.name = item.getName();

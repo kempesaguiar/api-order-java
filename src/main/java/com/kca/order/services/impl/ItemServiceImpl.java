@@ -1,6 +1,7 @@
 package com.kca.order.services.impl;
 
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,6 +45,20 @@ public class ItemServiceImpl implements ItemService {
 		return this.itemrepository.findAll()
 				.stream().map(item -> this.userMapper.itemToItemShowDTO(item))
 				.collect(Collectors.toList());
+	}
+	
+	@Transactional
+	@Override
+	public ItemShowDTO updateItem(UUID id, ItemCreateDTO itemRequestDTO) {
+		Item itemToBeSaved = this.userMapper.itemCreateDTOToItem(itemRequestDTO);
+		itemToBeSaved = this.itemrepository.saveAndFlush(itemToBeSaved);
+		return this.userMapper.itemToItemShowDTO(itemToBeSaved);
+	}
+	
+	@Transactional
+	@Override
+	public void deleteItem(UUID id) {
+		this.itemrepository.deleteById(id);
 	}
 
 }

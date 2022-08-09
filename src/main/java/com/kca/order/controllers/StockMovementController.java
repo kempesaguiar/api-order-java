@@ -19,7 +19,7 @@ import com.kca.order.services.StockMovementService;
 import com.kca.order.utils.BaseResponse;
 
 @RestController
-@RequestMapping("/stockmovement")
+@RequestMapping("/stockmovements")
 public class StockMovementController {
 	
 	private final StockMovementService service;

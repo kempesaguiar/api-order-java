@@ -15,14 +15,11 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.kca.order.entities.dtos.orders.OrderCreateDTO;
 import com.kca.order.entities.dtos.orders.OrderShowDTO;
-import com.kca.order.entities.dtos.stockmovements.StockMovementCreateDTO;
-import com.kca.order.entities.dtos.stockmovements.StockMovementShowDTO;
 import com.kca.order.services.OrderService;
-import com.kca.order.services.StockMovementService;
 import com.kca.order.utils.BaseResponse;
 
 @RestController
-@RequestMapping("/order")
+@RequestMapping("/orders")
 public class OrderController {
 	
 	private final OrderService service;

@@ -2,10 +2,10 @@ package com.kca.order.controllers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.kca.order.DataConfiguration;
-import com.kca.order.entities.dtos.users.UserCreateDTO;
-import com.kca.order.entities.dtos.users.UserShowDTO;
-import com.kca.order.services.impl.UserServiceImpl;
-import com.kca.order.utils.UserFactory;
+import com.kca.order.entities.dtos.itens.ItemCreateDTO;
+import com.kca.order.entities.dtos.itens.ItemShowDTO;
+import com.kca.order.services.impl.ItemServiceImpl;
+import com.kca.order.utils.ItemFactory;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -29,12 +29,12 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@WebMvcTest(UserController.class)
+@WebMvcTest(ItemController.class)
 //@ActiveProfiles("test")
-class UserControllerTest {
+class ItemControllerTest {
 	
     @MockBean
-    private UserServiceImpl userService;
+    private ItemServiceImpl itemService;
 
     @MockBean
     private DataSource datasource;
@@ -47,17 +47,17 @@ class UserControllerTest {
 
     @BeforeEach
     void setUp() throws Exception {
-        UserShowDTO userShowDTO = UserFactory.createUserShowDTO();
-        List<UserShowDTO> usersList = new ArrayList<>();
-        usersList.add(userShowDTO);
+        ItemShowDTO itemShowDTO = ItemFactory.createItemShowDTO();
+        List<ItemShowDTO> itensList = new ArrayList<>();
+        itensList.add(itemShowDTO);
 
-        when(this.userService.listAllUsers()).thenReturn(usersList);
-        when(this.userService.createUser(any())).thenReturn(userShowDTO);
+        when(this.itemService.listAllItens()).thenReturn(itensList);
+        when(this.itemService.createItem(any())).thenReturn(itemShowDTO);
     }
 
     @Test
-    void findAll_ShouldReturnListOfUserShowDTO_WhenSuccessful() throws Exception {
-        this.mockMvc.perform(get("/users"))
+    void findAll_ShouldReturnListOfItemShowDTO_WhenSuccessful() throws Exception {
+        this.mockMvc.perform(get("/itens"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.data").isArray())
                 .andExpect(jsonPath("$.data").isNotEmpty())
@@ -67,9 +67,9 @@ class UserControllerTest {
 
     @Test
     void findAll_ShouldReturnAnEmptyList_WhenSuccessful() throws Exception {
-        when(this.userService.listAllUsers()).thenReturn(new ArrayList<>());
+        when(this.itemService.listAllItens()).thenReturn(new ArrayList<>());
 
-        this.mockMvc.perform(get("/users"))
+        this.mockMvc.perform(get("/itens"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.data").isArray())
                 .andExpect(jsonPath("$.data").isEmpty())
@@ -78,13 +78,13 @@ class UserControllerTest {
     }
 
     @Test
-    void saveUser_ShouldReturnUserShowDTO_WhenSuccessFul() throws Exception {
-        UserCreateDTO userDTO = UserFactory.createUserDTO();
+    void saveItem_ShouldReturnItemShowDTO_WhenSuccessFul() throws Exception {
+        ItemCreateDTO itemDTO = ItemFactory.createItemDTO();
 
-        ResultActions result = this.mockMvc.perform(post("/users")
+        ResultActions result = this.mockMvc.perform(post("/itens")
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON)
-                .content(new ObjectMapper().writeValueAsString(userDTO)));
+                .content(new ObjectMapper().writeValueAsString(itemDTO)));
 
         result.andExpect(status().isCreated());
         result.andExpect(jsonPath("$").isNotEmpty());
@@ -93,4 +93,5 @@ class UserControllerTest {
         result.andExpect(jsonPath("$.data.name", is("Test")));
     }
 }
+
 
