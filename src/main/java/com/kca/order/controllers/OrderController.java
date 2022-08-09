@@ -11,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -22,6 +23,8 @@ import com.kca.order.entities.dtos.orders.OrderCreateDTO;
 import com.kca.order.entities.dtos.orders.OrderShowDTO;
 import com.kca.order.services.OrderService;
 import com.kca.order.utils.BaseResponse;
+
+import io.swagger.v3.oas.annotations.Operation;
 
 @RestController
 @RequestMapping("/orders")
@@ -37,6 +40,7 @@ public class OrderController {
 	}
 
 	@GetMapping
+	@Operation(summary = "Get All Orders", description = "By default returns all saved orders.")
 	public ResponseEntity<BaseResponse<List<OrderShowDTO>>> findAllOrders() {
 		logger.info("Método GET da API de Order foi chamado");
 		BaseResponse<List<OrderShowDTO>> response = new BaseResponse<>();
@@ -57,7 +61,7 @@ public class OrderController {
 	}
 	
 	@PutMapping("/{id}")
-	public ResponseEntity<BaseResponse<OrderShowDTO>> updateUser(UUID id, @RequestBody OrderCreateDTO dto) {
+	public ResponseEntity<BaseResponse<OrderShowDTO>> updateUser(@PathVariable(name = "id") UUID id, @RequestBody OrderCreateDTO dto) {
 		logger.info("Método PUT da API de Order foi chamado");
 		BaseResponse<OrderShowDTO> response = new BaseResponse<>();
 		OrderShowDTO savedOrder = this.service.updateOrder(id, dto);
@@ -67,8 +71,8 @@ public class OrderController {
 		return ResponseEntity.created(uri).body(response);
 	}
 	
-	@DeleteMapping
-	public void deleteOrder(UUID id) {
+	@DeleteMapping("/{id}")
+	public void deleteOrder(@PathVariable(name = "id") UUID id) {
 		logger.info("Método DELETE da API de Order foi chamado");
 		try {
 			this.service.deleteOrder(id);

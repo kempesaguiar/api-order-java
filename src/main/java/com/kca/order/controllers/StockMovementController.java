@@ -24,6 +24,8 @@ import com.kca.order.entities.dtos.stockmovements.StockMovementShowDTO;
 import com.kca.order.services.StockMovementService;
 import com.kca.order.utils.BaseResponse;
 
+import io.swagger.v3.oas.annotations.Operation;
+
 @RestController
 @RequestMapping("/stockmovements")
 public class StockMovementController {
@@ -38,6 +40,7 @@ public class StockMovementController {
 	}
 
 	@GetMapping
+	@Operation(summary = "Get All StockMovements", description = "By default returns all saved stockMovements.")
 	public ResponseEntity<BaseResponse<List<StockMovementShowDTO>>> findAllStockMovements() {
 		logger.info("Método GET da API de StockMovement foi chamado");
 		BaseResponse<List<StockMovementShowDTO>> response = new BaseResponse<>();
@@ -58,7 +61,7 @@ public class StockMovementController {
 	}
 	
 	@PutMapping("/{id}")
-	public ResponseEntity<BaseResponse<StockMovementShowDTO>> updateStockMovement(@PathVariable UUID id, @RequestBody StockMovementCreateDTO dto) {
+	public ResponseEntity<BaseResponse<StockMovementShowDTO>> updateStockMovement(@PathVariable(name = "id") UUID id, @RequestBody StockMovementCreateDTO dto) {
 		logger.info("Método PUT da API de StockMovement foi chamado");
 		BaseResponse<StockMovementShowDTO> response = new BaseResponse<>();
 		StockMovementShowDTO savedStockMovement = this.service.createStockMovement(dto);
@@ -69,7 +72,7 @@ public class StockMovementController {
 	}
 	
 	@DeleteMapping("/{id}")
-	public void deleteStockMovement(UUID id) {
+	public void deleteStockMovement(@PathVariable(name = "id") UUID id) {
 		logger.info("Método DELETE da API de StockMovement foi chamado");
 		try {
 			this.service.deleteStockMovement(id);

@@ -24,6 +24,9 @@ import com.kca.order.entities.dtos.itens.ItemShowDTO;
 import com.kca.order.services.ItemService;
 import com.kca.order.utils.BaseResponse;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+
 @RestController
 @RequestMapping("/itens")
 public class ItemController {
@@ -38,6 +41,7 @@ public class ItemController {
 	}
 
 	@GetMapping
+	@Operation(summary = "Get All Itens", description = "By default returns all saved itens.")
 	public ResponseEntity<BaseResponse<List<ItemShowDTO>>> findAllItens() {
 		logger.info("Método GET da API de Itens foi chamado");
 		BaseResponse<List<ItemShowDTO>> response = new BaseResponse<>();
@@ -48,6 +52,7 @@ public class ItemController {
 	}
 
 	@PostMapping
+	@Operation(summary = "Create Itens", description = "saved itens.")
 	public ResponseEntity<BaseResponse<ItemShowDTO>> createItem(@RequestBody ItemCreateDTO dto) {
 		logger.info("Método POST da API de Itens foi chamado");
 		BaseResponse<ItemShowDTO> response = new BaseResponse<>();
@@ -59,7 +64,8 @@ public class ItemController {
 	}
 	
 	@PutMapping("/{id}")
-	public ResponseEntity<BaseResponse<ItemShowDTO>> updateItem(@PathVariable UUID id, @RequestBody ItemCreateDTO dto) throws Exception {
+	@Operation(summary = "Update Itens", description = "saved itens.")
+	public ResponseEntity<BaseResponse<ItemShowDTO>> updateItem(@PathVariable(name = "id") UUID id, @RequestBody ItemCreateDTO dto) throws Exception {
 		logger.info("Método PUT da API de Itens foi chamado");
 		BaseResponse<ItemShowDTO> response = new BaseResponse<>();
 		ItemShowDTO savedItem = this.service.updateItem(id, dto);
@@ -70,7 +76,8 @@ public class ItemController {
 	}
 
 	@DeleteMapping("/{id}")
-	public void deleteItem(@PathVariable UUID id) {
+	@Operation(summary = "Deletes a item", description = "Deletes a item if the id exists.")
+	public void deleteItem(@PathVariable(name = "id") UUID id) {
 		logger.info("Método DELETE da API de Itens foi chamado");
 		try {
 			this.service.deleteItem(id);

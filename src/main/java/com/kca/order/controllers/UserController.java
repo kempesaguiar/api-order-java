@@ -25,6 +25,8 @@ import com.kca.order.entities.dtos.users.UserShowDTO;
 import com.kca.order.services.UserService;
 import com.kca.order.utils.BaseResponse;
 
+import io.swagger.v3.oas.annotations.Operation;
+
 @RestController
 @RequestMapping("/users")
 public class UserController {
@@ -39,6 +41,7 @@ public class UserController {
 	}
 
 	@GetMapping
+	@Operation(summary = "Get All User", description = "By default returns all saved users.")
 	public ResponseEntity<BaseResponse<List<UserShowDTO>>> findAllUsers() {
 		logger.info("Método GET da API de User foi chamado");
 		BaseResponse<List<UserShowDTO>> response = new BaseResponse<>();
@@ -59,7 +62,7 @@ public class UserController {
 	}
 	
 	@PutMapping("/{id}")
-	public ResponseEntity<BaseResponse<UserShowDTO>> updateUser(@PathVariable UUID id, @RequestBody UserCreateDTO dto) {
+	public ResponseEntity<BaseResponse<UserShowDTO>> updateUser(@PathVariable(name = "id") UUID id, @RequestBody UserCreateDTO dto) {
 		logger.info("Método PUT da API de User foi chamado");
 		BaseResponse<UserShowDTO> response = new BaseResponse<>();
 		UserShowDTO savedUser = this.service.updateUser(id, dto);
@@ -70,7 +73,7 @@ public class UserController {
 	}
 	
 	@DeleteMapping("/{id}")
-	public void deleteUser(UUID id) {
+	public void deleteUser(@PathVariable(name = "id") UUID id) {
 		logger.info("Método DELETE da API de User foi chamado");
 		try {
 			this.service.deleteUser(id);
