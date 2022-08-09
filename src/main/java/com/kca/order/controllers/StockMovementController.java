@@ -4,6 +4,8 @@ import java.net.URI;
 import java.util.List;
 import java.util.UUID;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,6 +28,8 @@ import com.kca.order.utils.BaseResponse;
 @RequestMapping("/stockmovements")
 public class StockMovementController {
 	
+	private static final Logger logger = LogManager.getLogger(StockMovementController.class);
+	
 	private final StockMovementService service;
 
 	@Autowired
@@ -35,6 +39,7 @@ public class StockMovementController {
 
 	@GetMapping
 	public ResponseEntity<BaseResponse<List<StockMovementShowDTO>>> findAllStockMovements() {
+		logger.info("Método GET da API de StockMovement foi chamado");
 		BaseResponse<List<StockMovementShowDTO>> response = new BaseResponse<>();
 		List<StockMovementShowDTO> usersList = this.service.listAllStockMovements();
 		response.setResponse(usersList, HttpStatus.OK);
@@ -43,6 +48,7 @@ public class StockMovementController {
 
 	@PostMapping
 	public ResponseEntity<BaseResponse<StockMovementShowDTO>> createStockMovement(@RequestBody StockMovementCreateDTO dto) {
+		logger.info("Método POST da API de StockMovement foi chamado");
 		BaseResponse<StockMovementShowDTO> response = new BaseResponse<>();
 		StockMovementShowDTO savedStockMovement = this.service.createStockMovement(dto);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
@@ -53,6 +59,7 @@ public class StockMovementController {
 	
 	@PutMapping("/{id}")
 	public ResponseEntity<BaseResponse<StockMovementShowDTO>> updateStockMovement(@PathVariable UUID id, @RequestBody StockMovementCreateDTO dto) {
+		logger.info("Método PUT da API de StockMovement foi chamado");
 		BaseResponse<StockMovementShowDTO> response = new BaseResponse<>();
 		StockMovementShowDTO savedStockMovement = this.service.createStockMovement(dto);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
@@ -63,10 +70,12 @@ public class StockMovementController {
 	
 	@DeleteMapping("/{id}")
 	public void deleteStockMovement(UUID id) {
+		logger.info("Método DELETE da API de StockMovement foi chamado");
 		try {
 			this.service.deleteStockMovement(id);
 		} catch(Exception e) {
 			System.out.println("Error delete by User " + id);
+			logger.error("Error delete StockMovement");
 		}
 	}
 
